@@ -1,0 +1,27 @@
+version: '2.3'
+networks:
+  default:
+    driver: bridge
+    ipam: 
+      config: 
+        - subnet: '172.31.0.0/16'
+
+services:
+  age_estimate:
+    image: nvcr.io/nvidia/pytorch:21.06-py3
+    runtime: nvidia
+    build: .
+    volumes:
+        - ./src:/workspace/estimation_src
+        - ./dataset:/workspace/dataset
+        - ./annotation:/workspace/annotation
+        - ./crop_work:/workspace/crop_work
+        - ./toukei:/workspace/toukei
+        - ./result:/workspace/result
+        - ./age_estimate:/workspace/age_estimate
+    ports:
+      - "6000:6006"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    tty: True
+
