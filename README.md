@@ -53,4 +53,4 @@ You can use the following BibTeX entry.
 }
 ```
 
-The MIT License (MIT) | Open Source Initiative
+[The MIT License (MIT) | Open Source Initiative](https://opensource.org/license/mit)
