@@ -4,63 +4,54 @@ import numpy as np
 import cv2
 
 def WidthSize_Calc(PolarImage : np):
-    """鱗の横幅サイズを算出する関数
-
-    Augs: 
-        PolarImage(np) : 極座標展開後のマスク画像 
-
-    Returns: 
-        int : 鱗領域部分の最大サイズ
-        int : 鱗領域部分における一番右側のx座標
     """
-    
+    Function to calculate width size of scales
+    Augs: (np) : Mask image after polar coordinates expansion 
+        PolarImage(np) : mask image after polar coordinates expansion 
+    Returns: int : maximum size of the scale area portion 
+        int : maximum size of scale area
+        int : x-coordinate of the rightmost side of the scale area
+    """
     height = PolarImage.shape[0]
     width = PolarImage.shape[1]
     MaxArea = 0
     MaxIndex = 0
     for h in range(height):
-        # 白い領域の数を計数
+        # Count the number of white areas
         ScaleAreaCount = np.count_nonzero(PolarImage[h] == 255)
-        # 一番面積が大きかった時，鱗領域部分の一番右の座標を取得
+        # Obtain the rightmost coordinate of the scaled area when the area is the largest.
         if ScaleAreaCount > MaxArea:
             MaxArea = ScaleAreaCount
-            # 配列を左右反転
+            # Reverse array left to right
             WidthFlip = np.flip(PolarImage[h])
-            # 最大値のうち一番左側のインデックスを取得
+            # Get the leftmost index of the largest value
             FlipIndex = np.argmax(WidthFlip)
-            # 反転したインデックスを戻すことで一番右側のインデックスを取得
+            # Retrieve the rightmost index by reversing the inverted index back
             MaxIndex = width - 1 -FlipIndex
 
-    # debug用
-    # print("width  "+str(width))
-    # print("FlipIndex  "+str(FlipIndex))
-    # print("MaxIndex  "+str(MaxIndex))
-    # print("MaxArea  "+str(MaxArea))
     return MaxArea,MaxIndex
 
 def euclid(a : list  , b : list ):
-    """2点のユークリッド距離を求める関数
-
-    Augs: 
-        a,b(list) : a,bの2点の2次元座標
-
-    Returns: 
-        int : 2点のユークリッド距離
+    """
+    Function to find Euclidean distance between two points
+    Augs: function to find the Euclidean distance of a point 
+        a,b(list) : 2D coordinates of two points a,b
+    Returns: int : Euclidean distance of two points 
+        int : Euclidean distance of two points
     """
 
     return math.sqrt(math.pow(a[0]-b[0],2)+math.pow(a[1]-b[1],2))
 
 def spline3(x,y,point,deg):
-    """spline補間を行う関数
-
-    Augs: 
-        x(list) : x座標のデータ
-        y(list) : y座標のデータ
-        point   : 点の分割数
-        deg     : 次数
-
-    Returns: 
-        int : 補間結果の点におけるx,y座標
+    """
+    Function to perform a spline interpolation
+    Augs: x(list) : data of x-coordinates 
+        x(list) : data of x-coordinate
+        y(list) : data of y-coordinate
+        point : number of point divisions
+        deg : degree
+    Returns: int : x,y coordinates of the interpolated result 
+        int : x,y coordinates of the interpolated point
     """
     tck,u = interpolate.splprep([x,y],k=deg,s=0)
     u = np.linspace(0,1,num=point,endpoint=True) 
@@ -68,66 +59,67 @@ def spline3(x,y,point,deg):
     return spline[0],spline[1]
 
 def getRadian(a,b):
-    """角度を算出する
-
-    Augs:
-        a(list) : 点aの座標データ[x,y]
-        b(list) : 点bの座標データ[x,y]
-    
-    Returns: 
-        theta(float) : 角度
     """
-    #ベクトルを算出
+    Calculate angles
+    Augs: : Calculate the angle of the point a.
+        a(list) : coordinate data of point a[x,y].
+        b(list) : coordinate data of point b[x,y]
+    
+    Returns: theta(float) : angle 
+        theta(float) : angle
+    """
+    #Calculate vector
     vec1=[a[0]-a[0],abs(b[1]-a[1])]
     vec2=[a[0]-b[0],b[1]-a[1]]
 
-    #内積、ノルムを算出
+    #Calculate inner product and norm
     inner=np.inner(vec1,vec2)
     absvec1=np.linalg.norm(vec1)
     absvec2=np.linalg.norm(vec2)
 
-    #cosθを算出しθへと変換
+    #Calculate cosθ and convert to θ
     cos_theta=inner/(absvec1*absvec2)
     theta=math.degrees(math.acos(cos_theta))
     return theta
 
 def TailPixel_Counter(RestzoneArea):
-    """各領域の末尾のピクセルを記録する
-    -> 各領域の末尾→領域内で最もY方向のラベルが大きい
-
-    Augs:
-        RestzoneArea : cv2.findContoursによって領域検出を行った結果
-    Returns: 
-        TailList(List) : 入力した各領域の末尾のピクセル
+    """
+    Record the last pixel of each region
+    -> end of each region -> largest label in Y direction in the region
+    Augs:.
+        RestzoneArea : result of area detection by cv2.findContours
+    Returns: TailList(List) 
+        TailList(List) : Pixels at the end of each input region
     """
     TailList=[]
-    #各領域を順に探索
+    #Search each region in turn
     for AreaLabel in range(len(RestzoneArea)):
         y_max=-1
-        #ある1つの領域のピクセルを探索
+        #Search for pixels in one area
         for PicelLabel in range(len(RestzoneArea[AreaLabel])):
-            #領域内で最もY方向のラベルが大きかったら更新
+            #Update if the label in the Y direction is the largest in the region
             if y_max <= RestzoneArea[AreaLabel][PicelLabel][0][1]:
                 TailPicel = RestzoneArea[AreaLabel][PicelLabel][0]
                 y_max = RestzoneArea[AreaLabel][PicelLabel][0][1]
-        #領域内で最もY方向のラベルが大きい要素をリストに追加
+        #Add the element with the largest Y-direction label in the region to the list
+
         TailList.append(TailPicel)
     return TailList
 
 def HeadPixel_Counter(RestzoneArea):
-    """各領域の先頭のピクセルを記録する
-    -> 各領域の先頭→領域内でY方向のラベルが小さい
-
-    Augs:
-        RestzoneArea : cv2.findContoursによって領域検出を行った結果
-    Returns: 
-        TailList(List) : 入力した各領域の先頭のピクセル
+    """
+    Record the first pixel of each region
+    -> beginning of each region -> small label in Y direction in the region
+    Augs:.
+        RestzoneArea : result of area detection by cv2.findContours
+    Returns: TailList(List) 
+        TailList(List) : Pixels at the beginning of each input region
     """
     HeadList=[]
 
-    #各領域を順に探索
+    #Search each region in turn
     for AreaLabel in range(len(RestzoneArea)):
-        #ある1つの領域のピクセルを探索
+        #Search for pixels in one area
         y_min=20000
         for PixelLabel in range(len(RestzoneArea[AreaLabel])):
             if y_min >= RestzoneArea[AreaLabel][PixelLabel][0][1]:
@@ -138,13 +130,13 @@ def HeadPixel_Counter(RestzoneArea):
 
 def AgeEstimate(RestzoneArea,y_size):
 
-    """ 補間後の結果から年齢判定を行う
-    Augs:
-        RestzoneArea : 補間後に領域抽出で検出した休止帯データ
-        y_size : 画像の縦方向のサイズ
-
-    Returns: 
-        basic_Image(ndarray) : 入力画像をグレー画像にした後、ネガポジ変換を行った結果
+    """
+    Age determination from interpolated results
+    Augs: (for the first time)
+        RestzoneArea : Rest zone data detected by region extraction after interpolation
+        y_size : Vertical size of the image
+    Returns: Basic_Image(ndarray) 
+        basic_Image(ndarray) : Result of negative-positive transformation after converting input image to gray image
     """
 
     flag = [0] * y_size
@@ -155,6 +147,6 @@ def AgeEstimate(RestzoneArea,y_size):
                 flag[RestzoneArea[AreaLabel][PixelLabel][0][1]]+=1
         flag = [0] * y_size
     
-    #画像要素から休止帯の通過した数が0,1であるものを削除
+    #Delete image elements with 0,1 number of resting zones passed from the image element.
     count=[s for s in count if s != 0]
     count=[s for s in count if s != 1]

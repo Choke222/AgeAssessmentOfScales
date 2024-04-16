@@ -7,8 +7,7 @@ from segmentation.models import all_models
 from util.logger import Logger
 from natsort import natsorted
 import glob
-import sys,os
-import time
+import os
 
 pred_file="../dataset/uroko_data4/" # Input image directory(uroko_data4:4 age sample)
 result="../dataset/out_restingzonedetec/"
