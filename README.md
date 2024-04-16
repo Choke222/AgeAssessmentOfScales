@@ -24,9 +24,8 @@ docker-compose exec age_estimate_public bash
 
 ### Inference: Resting zone detection
 Download the model weights from [URL](https://drive.google.com/file/d/1gAy2jpc6JLyAerJsBqkpzHcF1jvm81W2/view?usp=sharing) and store them in the following directory
-'''
 src/runs/models/pspnet_vgg16/uroko_w/
-'''
+
 
 You can perform resting zone detection by executing the following code.
 ```bash
