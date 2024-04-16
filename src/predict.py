@@ -10,7 +10,7 @@ import glob
 import sys,os
 import time
 
-pred_file="../dataset/uroko_data/" #Test image 
+pred_file="../dataset/uroko_data/" # Input image directory
 result="../dataset/out_restingzonedetec/"
 print(pred_file,result)
 
@@ -22,10 +22,10 @@ if __name__ == '__main__':
     image_axis_minimum_size = 200
     pretrained = True
     fixed_feature = False
-    epoch="epoch_90"
+    epoch="epoch_100"
 
     print(model_name,n_classes,batch_size,epoch)
-    logger = Logger(model_name=model_name, data_name='10x13_imgs_5to5')
+    logger = Logger(model_name=model_name, data_name='uroko_w')
 
     ### Model
     model = all_models.model_from_name[model_name](n_classes, batch_size,

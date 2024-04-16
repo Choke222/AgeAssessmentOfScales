@@ -19,7 +19,7 @@ Environment
 Compose up the Docker container and log in to the container.
 ```bash
 docker-compose up -d
-docker-compose exec age_estimate bash
+docker-compose exec age_estimate_public bash
 ```
 
 ### Inference: Resting zone detection
