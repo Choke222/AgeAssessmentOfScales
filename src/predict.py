@@ -10,7 +10,7 @@ import glob
 import sys,os
 import time
 
-pred_file="../dataset/uroko_data/" # Input image directory
+pred_file="../dataset/uroko_data4/" # Input image directory(uroko_data4:4 age sample)
 result="../dataset/out_restingzonedetec/"
 print(pred_file,result)
 
