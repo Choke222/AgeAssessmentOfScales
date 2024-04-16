@@ -6,12 +6,12 @@ The papers can be found at XXX below.
 
 ## File List
 The following files are provided in this repository:
-- predict.py: Resting zone detection
-- main.py: Age assessment
+- src/all.sh: Age assessment programs 
 - dataset/: Uroko images
+- src/predict.py: Only resting zone detection
+- src/main.py: Only age assessment 
 
 ## Usage
-
 Environment
 - Docker version 25.0.0, build e758fe5
 
@@ -20,9 +20,11 @@ Compose up the Docker container and log in to the container.
 ```bash
 docker-compose up -d
 docker-compose exec age_estimate_public bash
+docker-container:/workspace# cd estimation_src
+docker-container:/workspace/estimation_src# sh first.sh
 ```
 Download the model weights from [URL](https://drive.google.com/file/d/1gAy2jpc6JLyAerJsBqkpzHcF1jvm81W2/view?usp=sharing) and store them in the following directory
-estimation_src/runs/models/pspnet_vgg16/uroko_w/
+docker-container:/workspace/estimation_src/runs/models/pspnet_vgg16/uroko_w/
 
 ### Quick Test for Age Assessment
 The age assessment is performed by executing the following shell file, specifying the first line of all.sh as the name of the image file in dataset/image.
@@ -38,7 +40,7 @@ docker-container:/workspace/estimation_src# python3 data_proc.py ../dataset/imag
 
 You can perform resting zone detection by executing the following code.
 ```bash
-docker-container:/workspace/estimation_src# python3 predict.py ../dataset/patchimg/uroko20181a4 ../dataset/out_restingzonedetec
+docker-container:/workspace/estimation_src# python3 predict.py ../dataset/patching/uroko20181a4 ../dataset/out_restingzonedetec
 ```
 
 Merging patches of images can be performed with the following code.

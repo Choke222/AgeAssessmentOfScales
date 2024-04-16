@@ -31,7 +31,7 @@ def image_cut(file_name,h_split,w_split,count):
     tmp=path_split[-1].split("-")
     print(tmp[0])
     filename_img=os.path.splitext(os.path.basename(file_name))[0]
-    img_dir="../dataset/patchimg/"+filename_img
+    img_dir="../dataset/patching/"+filename_img
     os.makedirs(img_dir,exist_ok=True)
     for num in range(int(h_split*w_split)):
         output_filename=img_dir+"/"+str(count)+"-"+str(num+1)+"-"+tmp[0]

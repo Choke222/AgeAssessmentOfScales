@@ -1,5 +1,5 @@
 dataset/out_restingzonedetec/*
-dataset/patchimg/*
+dataset/patching/*
 dataset/restzone/*
 dataset/result/*
 src/runs/*

@@ -14,11 +14,6 @@ services:
     volumes:
         - ./src:/workspace/estimation_src
         - ./dataset:/workspace/dataset
-        # - ./annotation:/workspace/annotation
-        # - ./crop_work:/workspace/crop_work
-        # - ./toukei:/workspace/toukei
-        # - ./result:/workspace/result
-        # - ./age_estimate:/workspace/age_estimate
     ports:
       - "6000:6006"
     environment:

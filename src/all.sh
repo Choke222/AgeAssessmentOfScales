@@ -8,11 +8,11 @@ echo python3 data_proc.py $dir1$file1_1
 python3 data_proc.py $dir1$file1_1
 # python3 data_proc.py ../dataset/image/uroko20181a4.jpg
 
-dir2=../dataset/patchimg/
+dir2=../dataset/patching/
 dir3=../dataset/out_restingzonedetec
 python3 predict.py $dir2$file1 $dir3
 echo python3 predict.py $dir2$file1 $dir3
-# python3 predict.py ../dataset/patchimg/uroko201822a7 ../dataset/out_restingzonedetec
+# python3 predict.py ../dataset/patching/uroko201822a7 ../dataset/out_restingzonedetec
 
 dir4=../dataset/out_restingzonedetec/
 dir5=../dataset/restzone/
