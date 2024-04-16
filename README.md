@@ -44,7 +44,7 @@ docker-container:/workspace/estimation_src# python3 image_connect.py ../dataset/
 ### Inference: Age assessment
 You can perform resting zone detection by executing the following code.
 ```bash
-docker-container:/workspace/estimation_src# python3 main.py -r test -d test
+docker-container:/workspace/estimation_src# python3 main.py -r uroko20181a4 -d uroko20181a4
 ```
 
 ## Acknowledgements
