@@ -21,11 +21,16 @@ Compose up the Docker container and log in to the container.
 docker-compose up -d
 docker-compose exec age_estimate_public bash
 ```
-
-### Inference: Resting zone detection
 Download the model weights from [URL](https://drive.google.com/file/d/1gAy2jpc6JLyAerJsBqkpzHcF1jvm81W2/view?usp=sharing) and store them in the following directory
 estimation_src/runs/models/pspnet_vgg16/uroko_w/
 
+### Quick Test for Age Assessment
+The age assessment is performed by executing the following shell file, specifying the first line of all.sh as the name of the image file in dataset/image.
+```bash
+docker-container:/workspace/estimation_src# sh all.sh
+```
+
+### Inference: Resting zone detection
 The following code can be used to split an image into patches.
 ```bash
 docker-container:/workspace/estimation_src# python3 data_proc.py ../dataset/image/uroko20181a4.jpg

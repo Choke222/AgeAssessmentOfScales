@@ -38,15 +38,11 @@ if __name__ == '__main__':
     os.makedirs(result,exist_ok=True)
     file_list=glob.glob(pred_file+"/"+"*.jpg")
     files=natsorted(file_list)
-    # print(files)
     for name in files:
         print(name)
         f=name.split("/")
         uid,num,key=f[-1].split("-")
         dir_name=key.split(".")[0]
-        if int(num) == 1:
-            print(result+dir_name)
-            os.makedirs(result+dir_name,exist_ok=True)
         predict(model,name, result+"/"+dir_name+"/"+f[-1])
     
 

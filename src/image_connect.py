@@ -40,7 +40,6 @@ def concat_tile(im_list_2d):
 
 def join(path):
     file_path=path
-    # save_dir="../dataset/restzone/"
 
     tail=".jpg"
     files=glob.glob(file_path+"*"+tail)
