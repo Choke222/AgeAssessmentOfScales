@@ -7,13 +7,14 @@ from segmentation.models import all_models
 from util.logger import Logger
 from natsort import natsorted
 import glob
-import os
-
-pred_file="../dataset/uroko_data4/" # Input image directory(uroko_data4:4 age sample)
-result="../dataset/out_restingzonedetec/"
-print(pred_file,result)
+import os,sys
 
 if __name__ == '__main__':
+    args = sys.argv
+    pred_file=args[1]
+    result=args[2]
+    print(pred_file,result)
+
     model_name = "pspnet_vgg16"
     device = 'cuda'
     n_classes=2
@@ -35,17 +36,18 @@ if __name__ == '__main__':
 
     #### Writing the predict result.
     os.makedirs(result,exist_ok=True)
-    file_list=glob.glob(pred_file+"*.jpg")
+    file_list=glob.glob(pred_file+"/"+"*.jpg")
     files=natsorted(file_list)
     # print(files)
     for name in files:
+        print(name)
         f=name.split("/")
         uid,num,key=f[-1].split("-")
         dir_name=key.split(".")[0]
         if int(num) == 1:
             print(result+dir_name)
             os.makedirs(result+dir_name,exist_ok=True)
-        predict(model,name, result+dir_name+"/"+f[-1])
+        predict(model,name, result+"/"+dir_name+"/"+f[-1])
     
 
 

@@ -9,13 +9,6 @@ import cv2
 from natsort import natsorted
 import argparse
 
-def get_args():
-    parser = argparse.ArgumentParser(description='IOU calculation')
-
-    parser.add_argument('--method', '-m', type=str, default=False, help='Use method')
-    parser.add_argument('--epoch', '-e', type=str, default=False, help='Use weight of epoch')
-    return parser.parse_args()
-
 def cv2pil(image):
     ''' type:OpenCV -> type:PIL '''
     new_image = image.copy()
@@ -47,6 +40,7 @@ def concat_tile(im_list_2d):
 
 def join(path):
     file_path=path
+    # save_dir="../dataset/restzone/"
 
     tail=".jpg"
     files=glob.glob(file_path+"*"+tail)
@@ -54,6 +48,7 @@ def join(path):
     vertical=10
     width=13
     key=file_path.split("/")[-2]
+    print(files[0])
     tmp=files[0].split("/")
     uid=tmp[-1].split("-")[0]
 
@@ -73,20 +68,15 @@ def join(path):
 
     im_tail=concat_tile(image_list)
 
-    save_dir="../dataset/test3/"
     os.makedirs(save_dir,exist_ok=True)
-    cv2.imwrite(save_dir+key+tail,im_tail)
+    cv2.imwrite(save_dir+"/"+key+tail,im_tail)
 
 if __name__ =="__main__":
-    args = get_args()
+    args = sys.argv
+    res_file=args[1]
+    save_dir=args[2]
+    print(res_file,save_dir)
 
-    method=args.method
-    epoch=args.epoch
-
-    res_file="../dataset/out_restingzonedetec/"
-    files = os.listdir(res_file)
+    files = os.listdir(res_file+"/")
     files_dir = [f for f in files if os.path.isdir(os.path.join(res_file, f))]
-
-    for name in files:
-       print(res_file+name)
-       join(res_file+name+"/")
+    join(res_file+"/")

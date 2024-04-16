@@ -1,3 +1,11 @@
 dataset/out_restingzonedetec/uroko20181a4/
-src/runs/models/
+dataset/patchimg/uroko20181a4/
+dataset/restzone/uroko20181a4/
+dataset/out_restingzonedetec/uroko20182a5/
+dataset/patchimg/uroko20182a5/
+dataset/restzone/uroko20182a5/
+dataset/result/
+dataset/aaa/
+src/runs/*
+src/runs/models/pspnet_vgg16/uroko_w/epoch_100
 *.pyc
