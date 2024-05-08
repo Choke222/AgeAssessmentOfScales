@@ -1,6 +1,6 @@
 # Age Assessment Using Chum Salmon Scale by Neural Networks and Image Processing
 
-This repository is accompanying the papers "Age Assessment Using Chum Salmon Scale by Neural Networks and Image Processing" (G. Suzuki, M. Nishiyama, R. Hoson, K. Yoshida, H. Shioya, and K. Shimoda, IEEE ACCESS 2024, [doi:xxx]([https:xxxxx]([https://github.com/Choke222/AgeAssessmentOfScales](https://ieeexplore.ieee.org/document/10520289/keywords#keywords))))).
+This repository is accompanying the papers "Age Assessment Using Chum Salmon Scale by Neural Networks and Image Processing" (G. Suzuki, M. Nishiyama, R. Hoson, K. Yoshida, H. Shioya, and K. Shimoda, IEEE ACCESS 2024, ([doi:10.1109/ACCESS.2024.3396818](https://ieeexplore.ieee.org/document/10520289/keywords#keywords))).
 
 The papers can be found at XXX below.
 
